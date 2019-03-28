@@ -15,9 +15,9 @@ if recv[:3] != '220':
 # Send HELO command and print server response.
 heloCommand = 'HELO Alice\r\n'
 clientSocket.send(heloCommand.encode())
-recv1 = clientSocket.recv(1024).decode()
-print(recv1)
-if recv1[:3] != '250':
+recv0 = clientSocket.recv(1024).decode()
+print(recv0)
+if recv0[:3] != '250':
     print('250 reply not received from server.')
     
 # Send MAIL FROM command and print server response.
@@ -36,36 +36,24 @@ print(recv2)
 if recv2[:3] != '250':
     print('250 reply not received from server.')
 
-print('starting to send data command')
-
 # Send DATA command and print server response. 
-dataCommand = "DATA"
+dataCommand = "DATA\r\n"
 clientSocket.send(dataCommand.encode())
-print('data command has been sent')
 recv3 = clientSocket.recv(1024).decode()
-print('recieved something...')
 print(recv3)
 if recv3[:3] != '354':
     print('354 reply not received from server.')
 
 # Send message data.
-dataBody = "I love computer networks!\r\n"
+dataBody = "I love computer networks!\r\n.\r\n"
 clientSocket.send(dataBody.encode())
 recv4 = clientSocket.recv(1024).decode()
 print(recv4)
 if recv4[:3] != '250':
     print('250 reply not received from server.')
 
-# Message ends with a single period.
-dataBody2 = ".\r\n"
-clientSocket.send(dataBody2.encode())
-recv5 = clientSocket.recv(1024).decode()
-print(recv5)
-if recv5[:3] != '250':
-    print('250 reply not received from server.')
-
 # Send QUIT command and get server response.
-quitCommand = "QUIT"
+quitCommand = "QUIT\r\n"
 clientSocket.send(quitCommand.encode())
 recv5 = clientSocket.recv(1024).decode()
 print(recv5)
